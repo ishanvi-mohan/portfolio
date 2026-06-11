@@ -1,0 +1,11 @@
+
+  # Pixel Portfolio Template
+
+  This is a code bundle for Pixel Portfolio Template. The original project is available at https://www.figma.com/design/QOtUX2bI9B8U6dhJNBZSpO/Pixel-Portfolio-Template.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
