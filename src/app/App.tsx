@@ -1,5 +1,58 @@
 import { useState, useEffect } from "react";
-import { Github, Mail, MapPin, ChevronDown, Linkedin } from "lucide-react";
+import { Github, Mail, MapPin, ChevronDown, Linkedin, ExternalLink } from "lucide-react";
+
+const PROJECTS = [
+  {
+    title: "FILING IQ",
+    desc: "Paste in an HK company filing or earnings transcript and get back structured KPIs, risk factors, and management sentiment. Every extracted fact is checked against a verbatim quote from the source, so hallucinated numbers get flagged instead of trusted.",
+    tags: ["NEXT.JS", "TYPESCRIPT", "VERCEL"],
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=360&fit=crop&auto=format",
+    alt: "Financial charts and data analysis",
+    color: "#00ff41",
+    demo: "https://filing-iq-rho.vercel.app" as string | null,
+    code: "https://github.com/ishanvi-mohan/FilingIQ" as string | null,
+  },
+  {
+    title: "GROUNDING BENCH",
+    desc: "A benchmark for measuring how faithfully LLMs extract facts from HK earnings filings. Each model is scored on grounding rate, F1, and hallucination rate, with a deliberately lying baseline that should always score 0%.",
+    tags: ["NEXT.JS", "TYPESCRIPT", "OPENAI"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=360&fit=crop&auto=format",
+    alt: "Data benchmark leaderboard",
+    color: "#ff00ff",
+    demo: "https://grounding-bench.vercel.app" as string | null,
+    code: "https://github.com/ishanvi-mohan/GroundingBench" as string | null,
+  },
+  {
+    title: "COOL ROUTE",
+    desc: "Find the shadiest walking route between two points. Paths are scored using real-time sun position, building shadows, and tree canopy data, while staying within 20% of the shortest distance so the detour is always worth it.",
+    tags: ["REACT", "MAPBOX GL", "NODE.JS", "SUNCALC"],
+    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&h=360&fit=crop&auto=format",
+    alt: "City map aerial view",
+    color: "#00ffff",
+    demo: "https://cool-route-frontend.vercel.app" as string | null,
+    code: "https://github.com/ishanvi-mohan/CoolRoute" as string | null,
+  },
+  {
+    title: "PET PLANTS",
+    desc: "A gamified plant care app for two users on one account. One person sets watering schedules remotely, the other checks in at home. Plants have emotional states, XP levels from Seedling to Master Gardener, and streak bonuses for consistency.",
+    tags: ["REACT", "EXPRESS 5", "POSTGRESQL", "DRIZZLE ORM"],
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=600&h=360&fit=crop&auto=format",
+    alt: "Green houseplants",
+    color: "#ffff00",
+    demo: "https://pet-plants-eta.vercel.app" as string | null,
+    code: "https://github.com/ishanvi-mohan/Pet-Plant-Care" as string | null,
+  },
+  {
+    title: "TWO COOK TOO",
+    desc: "Generates recipes designed for two people to cook at the same time, not one person cooking while the other watches. Pick your ingredients and get a dish with parallel tasks split between both cooks.",
+    tags: ["NEXT.JS", "CLAUDE API", "SUPABASE", "TYPESCRIPT"],
+    image: "/twocooktoo.jpeg",
+    alt: "Two Cook Too cooking photo",
+    color: "#ff8800",
+    demo: "https://two-cook-too.vercel.app" as string | null,
+    code: "https://github.com/ishanvi-mohan/TwoCookToo" as string | null,
+  },
+];
 
 const ROLES = ["AI ENGINEER", "SOFTWARE DEVELOPER", "DATA ANALYST", "FULL STACK DEV"];
 
@@ -10,8 +63,10 @@ const EXPERIENCE = [
     period: "07 2024 – PRESENT",
     location: "HONG KONG SAR",
     bullets: [
-      "Owned and scaled end-to-end AI generation infrastructure (FastAPI, Redis, RunPod, AWS, R2) for real-time image/video inference at production scale.",
-      "Improved reliability from ~84% to >97% and reduced failures by ~70–90%, while increasing throughput by ~2–3× and cutting cloud costs by ~30–50% via async pipelines, queue redesign, and GPU recovery.",
+      "Owned and scaled AI infrastructure supporting 1.2M+ registered users, 6.4M+ generations, and 3,100+ MAU, shipping 30+ product features across model training, image generation, payments, monitoring, and caching.",
+      "Reduced generation latency by 60–70% through GPU orchestration improvements, distributed inference architecture redesign, and migration of GPU workloads to a scalable cloud infrastructure.",
+      "Improved infrastructure efficiency by 50%+ through storage optimization, queue redesign, and automated lifecycle policies.",
+      "Architected distributed AI inference and training pipelines using AWS SQS, Celery, Redis, and containerized GPU workers across 5+ concurrent GPU pods, improving model training success rate from ~84% to >97% and eliminating manual pod recovery through automated restart and dead-letter queue handling.",
     ],
     tags: ["FASTAPI", "REDIS", "AWS", "RUNPOD", "PYTHON"],
     color: "#00ff41",
@@ -41,15 +96,27 @@ const EXPERIENCE = [
     color: "#00ffff",
   },
   {
-    title: "BUSINESS INTELLIGENCE INTERN",
-    company: "GENERALI",
+    title: "IT INTERN",
+    company: "IMUSICTECH",
+    period: "06 2022 – 08 2022",
+    location: "HONG KONG SAR",
+    bullets: [
+      "Contributed to Muxic, a music sharing platform enabling creators to monetise content through NFTs, using Node.js for app development.",
+      "Improved UI components using React.js and CSS.",
+    ],
+    tags: ["NODE.JS", "REACT.JS", "NFT", "CSS"],
+    color: "#ff8800",
+  },
+  {
+    title: "IT INTERN",
+    company: "ASSICURAZIONI GENERALI",
     period: "08 2022 – 12 2022",
     location: "HONG KONG SAR",
     bullets: [
-      "Executed real-time data streaming solutions with Apache Kafka, resulting in a 41% reduction in data latency.",
-      "Led KPI evaluation and refinement to measure business performance, delivering actionable insights for data-driven decisions.",
+      "Worked on digital channels and data analytics, automating manual back-office processing through scripting.",
+      "Used Python's data science ecosystem (Pandas, NumPy, Matplotlib) alongside external APIs and in-house tools to generate insights across multiple datasets.",
     ],
-    tags: ["APACHE KAFKA", "POWER BI", "DATA PIPELINES", "KPI"],
+    tags: ["PYTHON", "PANDAS", "NUMPY", "DATA ANALYTICS"],
     color: "#ffff00",
   },
 ];
@@ -76,10 +143,9 @@ const SKILLS = {
 };
 
 const STATS = [
-  { label: "YEARS EXP", value: "03+" },
-  { label: "REPORTS BUILT", value: "59" },
-  { label: "LATENCY CUT", value: "41%" },
-  { label: "COST SAVED", value: "50%" },
+  { label: "YEARS EXP", value: "2+" },
+  { label: "LATENCY CUT", value: "60-70%" },
+  { label: "EFFICIENCY", value: "50%+" },
 ];
 
 const TECH_MARQUEE = [
@@ -95,8 +161,6 @@ export default function App() {
   const [deleting, setDeleting] = useState(false);
   const [skillTab, setSkillTab] = useState<SkillCategory>("AI / ML");
   const [activeExp, setActiveExp] = useState(0);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
 
   useEffect(() => {
     const current = ROLES[roleIdx];
@@ -124,11 +188,6 @@ export default function App() {
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-  };
 
   return (
     <>
@@ -287,7 +346,7 @@ export default function App() {
             </button>
 
             <div className="hidden md:flex items-center gap-8">
-              {["ABOUT", "EXPERIENCE", "SKILLS", "CONTACT"].map((s) => (
+              {["ABOUT", "PROJECTS", "EXPERIENCE", "SKILLS", "CONTACT"].map((s) => (
                 <button key={s} className="nav-link" onClick={() => scrollTo(s.toLowerCase())}>
                   {s}
                 </button>
@@ -428,7 +487,7 @@ export default function App() {
                   Outside work: instrumental music, birdwatching, long-distance running, international affairs. I believe good engineering is invisible — it just works, reliably, at scale.
                 </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+                <div className="grid grid-cols-3 gap-3 pt-4">
                   {STATS.map((s) => (
                     <div key={s.label} className="p-4 text-center" style={{ border: "2px solid rgba(0,255,65,.25)", background: "rgba(0,255,65,.04)" }}>
                       <div className="glow-g leading-none mb-2" style={{ fontFamily: "'VT323', monospace", fontSize: "48px", color: "#00ff41" }}>
@@ -446,9 +505,9 @@ export default function App() {
                     EDUCATION LOG
                   </div>
                   {[
-                    { school: "UNIVERSITY OF HONG KONG", degree: "BEng Computer Engineering · Finance Minor", period: "2020 – 2024", note: "Dean's Award 2020–2022 · Upper Second Class Honours" },
+                    { school: "UNIVERSITY OF HONG KONG", degree: "BEng Computer Engineering · Finance Minor", period: "2020 – 2024", note: "Dean's Award 2020–2022 · Upper Second Class Honours · Coursework: DSA, OS, DBMS, Software Engineering, OOP, Microprocessors, Probabilistic Systems, Data & Networking" },
                     { school: "SIMON FRASER UNIVERSITY", degree: "Study Abroad · Computer Engineering", period: "Jan – Apr 2023", note: "British Columbia, Canada" },
-                    { school: "BRIGHTLANDS SCHOOL", degree: "High School · ICSE / ISC", period: "2009 – 2020", note: "ICSE 98.25% · ISC 99% · SAT Math II 790 / Physics 800 · National Merit Scholar" },
+                    { school: "BRIGHTLANDS SCHOOL", degree: "High School · ICSE / ISC", period: "2009 – 2020", note: "ICSE 98.25% · ISC 99% · SAT Math II 790 / Physics 800 · National Merit Scholar · Senior Academics School Official" },
                   ].map((ed) => (
                     <div key={ed.school} className="mb-5 pl-4" style={{ borderLeft: "2px solid rgba(0,255,65,.3)" }}>
                       <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#00ff41", marginBottom: "4px" }}>{ed.school}</div>
@@ -500,12 +559,116 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── EXPERIENCE ── */}
-        <section id="experience" className="py-24" style={{ background: "rgba(0,255,65,.025)" }}>
+        {/* ── PROJECTS ── */}
+        <section id="projects" className="py-24" style={{ background: "rgba(0,255,65,.025)" }}>
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-12">
               <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "9px", color: "#00ff41", letterSpacing: ".2em", marginBottom: "10px" }}>
-                // 002 — EXPERIENCE
+                // 002 — PROJECTS
+              </div>
+              <h2 className="leading-none" style={{ fontFamily: "'VT323', monospace", fontSize: "clamp(44px,7vw,72px)", color: "#d4e8d4" }}>
+                SELECTED WORKS
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {PROJECTS.map((p) => (
+                <div
+                  key={p.title}
+                  style={{
+                    border: "2px solid rgba(0,255,65,.22)",
+                    background: "#0d0d1a",
+                    overflow: "hidden",
+                    transition: "border-color .2s, box-shadow .2s, transform .2s",
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = p.color;
+                    el.style.boxShadow = `0 0 24px ${p.color}30, 4px 4px 0 ${p.color}`;
+                    el.style.transform = "translate(-2px,-2px)";
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = "rgba(0,255,65,.22)";
+                    el.style.boxShadow = "none";
+                    el.style.transform = "none";
+                  }}
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden" style={{ height: "200px" }}>
+                    <img
+                      src={p.image}
+                      alt={p.alt}
+                      className="w-full h-full object-cover"
+                      style={{ filter: "saturate(.65) contrast(1.15)", transition: "transform .5s", objectPosition: p.objectPosition ?? "center" }}
+                      onMouseEnter={e => (e.target as HTMLElement).style.transform = "scale(1.05)"}
+                      onMouseLeave={e => (e.target as HTMLElement).style.transform = "scale(1)"}
+                    />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, #0d0d1a 100%)" }} />
+                    <div
+                      className="absolute top-3 left-3 px-2 py-1"
+                      style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: p.color, border: `1px solid ${p.color}`, background: "rgba(8,8,16,.85)" }}
+                    >
+                      FEATURED
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    <h3 className="mb-2" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "11px", color: p.color }}>
+                      {p.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-4" style={{ fontSize: "13px", lineHeight: "1.65" }}>
+                      {p.desc}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {p.tags.map((t) => (
+                        <span key={t} style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "rgba(212,232,212,.45)", border: "1px solid rgba(212,232,212,.15)", padding: "3px 7px" }}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-5">
+                      {p.demo && (
+                        <a
+                          href={p.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                          style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "rgba(212,232,212,.4)", textDecoration: "none", transition: "color .2s" }}
+                          onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#00ff41"}
+                          onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(212,232,212,.4)"}
+                        >
+                          <ExternalLink size={11} /> DEMO
+                        </a>
+                      )}
+                      {p.code && (
+                        <a
+                          href={p.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                          style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "rgba(212,232,212,.4)", textDecoration: "none", transition: "color .2s" }}
+                          onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#00ff41"}
+                          onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(212,232,212,.4)"}
+                        >
+                          <Github size={11} /> CODE
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── EXPERIENCE ── */}
+        <section id="experience" className="py-24">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="mb-12">
+              <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "9px", color: "#00ff41", letterSpacing: ".2em", marginBottom: "10px" }}>
+                // 003 — EXPERIENCE
               </div>
               <h2 className="leading-none" style={{ fontFamily: "'VT323', monospace", fontSize: "clamp(44px,7vw,72px)", color: "#d4e8d4" }}>
                 QUEST LOG
@@ -572,15 +735,59 @@ export default function App() {
               <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "#ff00ff", marginBottom: "14px", letterSpacing: ".1em" }}>
                 SIDE QUESTS — LEADERSHIP
               </div>
-              <div className="flex flex-wrap gap-8">
-                <div>
-                  <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#ff00ff", marginBottom: "4px" }}>VICE CHAIRPERSON · 2022–2023</div>
-                  <div style={{ fontSize: "13px", color: "rgba(212,232,212,.65)" }}>Music Society, The University of Hong Kong</div>
-                </div>
-                <div>
-                  <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#ff00ff", marginBottom: "4px" }}>STUDENT RESEARCHER · 2022</div>
-                  <div style={{ fontSize: "13px", color: "rgba(212,232,212,.65)" }}>Greenpeace Philippines · Renewable energy &amp; sustainability expansion</div>
-                </div>
+              <div className="grid sm:grid-cols-2 gap-5">
+                {[
+                  { role: "VICE CHAIRPERSON · 2022–2023", org: "Music Society, Arts Association, HKUSU, The University of Hong Kong" },
+                  { role: "STUDENT RESEARCHER · 2022", org: "Greenpeace Philippines · Renewable energy & sustainability expansion" },
+                  { role: "STUDENT MENTOR · 2021, 2022", org: "Academy for the Talented, HKU · STEM Symposium (FinTech & AI) and Engineering Bootcamp" },
+                  { role: "STUDENT INTERN · 2021", org: "Common Purpose · Research on MSMEs and growth opportunities in developing markets" },
+                  { role: "STUDENT AMBASSADOR · 2020–PRESENT", org: "The University of Hong Kong" },
+                  { role: "COMMS & MARKETING OFFICER · 2021–PRESENT", org: "Network of Environmental Student Societies, HK · Built the official NESS website" },
+                ].map((item) => (
+                  <div key={item.role}>
+                    <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#ff00ff", marginBottom: "4px" }}>{item.role}</div>
+                    <div style={{ fontSize: "13px", color: "rgba(212,232,212,.65)" }}>{item.org}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Awards */}
+            <div className="mt-6 p-6" style={{ border: "2px solid rgba(0,255,255,.2)", background: "rgba(0,255,255,.03)" }}>
+              <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "#00ffff", marginBottom: "14px", letterSpacing: ".1em" }}>
+                ACHIEVEMENTS
+              </div>
+              <div className="grid sm:grid-cols-3 gap-5">
+                {[
+                  { award: "DEAN'S AWARD", detail: "Engineering Students · HKU · 2020 & 2021" },
+                  { award: "2ND RUNNERS UP", detail: "Annual Hacklympics · Hackathon Society, HKU · 2021" },
+                  { award: "FOUNDATION ENTRANCE SCHOLARSHIP", detail: "The University of Hong Kong · 2020–2024" },
+                ].map((item) => (
+                  <div key={item.award}>
+                    <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#00ffff", marginBottom: "4px" }}>{item.award}</div>
+                    <div style={{ fontSize: "13px", color: "rgba(212,232,212,.65)" }}>{item.detail}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Volunteering */}
+            <div className="mt-6 p-6" style={{ border: "2px solid rgba(255,255,0,.15)", background: "rgba(255,255,0,.02)" }}>
+              <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "#ffff00", marginBottom: "14px", letterSpacing: ".1em" }}>
+                VOLUNTEERING
+              </div>
+              <div className="grid sm:grid-cols-2 gap-5">
+                {[
+                  { org: "ARTPEACE · HONG KONG SAR", detail: "Awareness Raising NGO · Jan–Feb 2021" },
+                  { org: "TITLI TRUST · INDIA", detail: "Nature Conservation NGO · 2018–2020" },
+                  { org: "WILDLIFE INSTITUTE OF INDIA", detail: "2021–2022 · Built mapping index software for GPS-based topographic sheet identification" },
+                  { org: "BUILDING DREAMS FOUNDATION · INDIA", detail: "Social Upliftment NGO · 2017–2019" },
+                ].map((item) => (
+                  <div key={item.org}>
+                    <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "#ffff00", marginBottom: "4px" }}>{item.org}</div>
+                    <div style={{ fontSize: "13px", color: "rgba(212,232,212,.65)" }}>{item.detail}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -591,7 +798,7 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-12">
               <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "9px", color: "#00ff41", letterSpacing: ".2em", marginBottom: "10px" }}>
-                // 003 — SKILLS
+                // 004 — SKILLS
               </div>
               <h2 className="leading-none" style={{ fontFamily: "'VT323', monospace", fontSize: "clamp(44px,7vw,72px)", color: "#d4e8d4" }}>
                 TECH TREE
@@ -699,104 +906,39 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-12">
               <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "9px", color: "#00ff41", letterSpacing: ".2em", marginBottom: "10px" }}>
-                // 004 — CONTACT
+                // 005 — CONTACT
               </div>
               <h2 className="leading-none" style={{ fontFamily: "'VT323', monospace", fontSize: "clamp(44px,7vw,72px)", color: "#d4e8d4" }}>
-                SEND A MESSAGE
+                GET IN TOUCH
               </h2>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12">
-              <div>
-                <p className="text-muted-foreground mb-8 leading-relaxed" style={{ fontSize: "14px" }}>
-                  Open to interesting roles in AI engineering, software development, and data. Got a project or opportunity? Let's talk. I typically reply within 24 hours.
-                </p>
-                <div className="space-y-5">
-                  {[
-                    { icon: <Mail size={14} />, label: "EMAIL", value: "ishanvimohan@gmail.com", href: "mailto:ishanvimohan@gmail.com" },
-                    { icon: <Linkedin size={14} />, label: "LINKEDIN", value: "linkedin.com/in/ishanvimohan", href: "https://linkedin.com/in/ishanvimohan" },
-                    { icon: <Github size={14} />, label: "GITHUB", value: "github.com/ishanvimohan", href: "https://github.com/ishanvimohan" },
-                    { icon: <MapPin size={14} />, label: "LOCATION", value: "HONG KONG SAR", href: null },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-4">
-                      <div style={{ color: "#00ff41" }}>{item.icon}</div>
-                      <div>
-                        <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "rgba(0,255,65,.45)", marginBottom: "3px" }}>
-                          {item.label}
-                        </div>
-                        {item.href ? (
-                          <a
-                            href={item.href}
-                            style={{ fontSize: "13px", color: "#d4e8d4", textDecoration: "none", transition: "color .2s" }}
-                            onMouseEnter={e => (e.target as HTMLElement).style.color = "#00ff41"}
-                            onMouseLeave={e => (e.target as HTMLElement).style.color = "#d4e8d4"}
-                          >{item.value}</a>
-                        ) : (
-                          <div style={{ fontSize: "13px", color: "#d4e8d4" }}>{item.value}</div>
-                        )}
-                      </div>
+            <div className="space-y-5 max-w-md">
+              {[
+                { icon: <Mail size={14} />, label: "EMAIL", value: "ishanvimohan@gmail.com", href: "mailto:ishanvimohan@gmail.com" },
+                { icon: <Linkedin size={14} />, label: "LINKEDIN", value: "linkedin.com/in/ishanvi-mohan", href: "https://linkedin.com/in/ishanvi-mohan" },
+                { icon: <Github size={14} />, label: "GITHUB", value: "github.com/ishanvi-mohan", href: "https://github.com/ishanvi-mohan" },
+                { icon: <MapPin size={14} />, label: "LOCATION", value: "HONG KONG SAR", href: null },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-4">
+                  <div style={{ color: "#00ff41" }}>{item.icon}</div>
+                  <div>
+                    <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "rgba(0,255,65,.45)", marginBottom: "3px" }}>
+                      {item.label}
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Terminal form */}
-              <div style={{ border: "2px solid rgba(0,255,65,.3)", background: "#0a0a14", overflow: "hidden" }}>
-                <div className="flex items-center gap-2 px-4 py-2 border-b" style={{ borderColor: "rgba(0,255,65,.18)", background: "rgba(0,255,65,.05)" }}>
-                  {["#ff5f56", "#ffbd2e", "#27c93f"].map((c) => (
-                    <div key={c} style={{ width: "11px", height: "11px", background: c }} />
-                  ))}
-                  <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "8px", color: "rgba(0,255,65,.4)", marginLeft: "8px" }}>
-                    CONTACT.EXE
-                  </span>
-                </div>
-
-                {sent ? (
-                  <div className="p-10 text-center">
-                    <div className="glow-g mb-2" style={{ fontFamily: "'VT323', monospace", fontSize: "72px", color: "#00ff41", lineHeight: "1" }}>✓</div>
-                    <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "10px", color: "#00ff41", marginBottom: "8px" }}>MESSAGE SENT!</div>
-                    <div style={{ fontSize: "13px", color: "rgba(212,232,212,.5)" }}>I'll get back to you soon.</div>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        style={{ fontSize: "13px", color: "#d4e8d4", textDecoration: "none", transition: "color .2s" }}
+                        onMouseEnter={e => (e.target as HTMLElement).style.color = "#00ff41"}
+                        onMouseLeave={e => (e.target as HTMLElement).style.color = "#d4e8d4"}
+                      >{item.value}</a>
+                    ) : (
+                      <div style={{ fontSize: "13px", color: "#d4e8d4" }}>{item.value}</div>
+                    )}
                   </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="p-6 space-y-5">
-                    {[
-                      { field: "name" as const, label: "YOUR NAME", type: "text", placeholder: "Ada Lovelace" },
-                      { field: "email" as const, label: "YOUR EMAIL", type: "email", placeholder: "ada@lovelace.dev" },
-                    ].map(({ field, label, type, placeholder }) => (
-                      <div key={field}>
-                        <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "rgba(0,255,65,.55)", marginBottom: "6px" }}>
-                          &gt; {label}
-                        </div>
-                        <input
-                          type={type}
-                          required
-                          placeholder={placeholder}
-                          value={form[field]}
-                          onChange={(e) => setForm((f) => ({ ...f, [field]: e.target.value }))}
-                          className="px-input"
-                        />
-                      </div>
-                    ))}
-                    <div>
-                      <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "7px", color: "rgba(0,255,65,.55)", marginBottom: "6px" }}>
-                        &gt; YOUR MESSAGE
-                      </div>
-                      <textarea
-                        required
-                        rows={4}
-                        placeholder="What are you building?"
-                        value={form.message}
-                        onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                        className="px-input"
-                        style={{ resize: "none" }}
-                      />
-                    </div>
-                    <button type="submit" className="px-btn" style={{ width: "100%" }}>
-                      TRANSMIT MESSAGE
-                    </button>
-                  </form>
-                )}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
