@@ -52,6 +52,36 @@ const PROJECTS = [
     demo: "https://two-cook-too.vercel.app" as string | null,
     code: "https://github.com/ishanvi-mohan/TwoCookToo" as string | null,
   },
+  {
+    title: "CREST-CDIFF-RISK",
+    desc: "Multimodal clinical data mining pipeline for predicting C. difficile infection risk, implementing the CREST feature extraction framework on patient records.",
+    tags: ["PYTHON", "CLINICAL ML", "FEATURE EXTRACTION", "DATA MINING"],
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=360&fit=crop&auto=format",
+    alt: "Medical data and clinical analysis",
+    color: "#00ffff",
+    demo: null,
+    code: "https://github.com/ishanvi-mohan/CREST-CDiff-Risk-Prediction" as string | null,
+  },
+  {
+    title: "REALTIME STOCK PREDICTION",
+    desc: "Real-time stock price prediction pipeline using Kafka → Spark Streaming → Cassandra → Redis → Node.js. Ingests live market data every 10 seconds, trains on historical trends, and surfaces predictions.",
+    tags: ["PYTHON", "KAFKA", "SPARK STREAMING", "CASSANDRA", "REDIS"],
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=360&fit=crop&auto=format",
+    alt: "Stock market data streams",
+    color: "#ff00ff",
+    demo: null,
+    code: "https://github.com/ishanvi-mohan/realtime-stock-prediction" as string | null,
+  },
+  {
+    title: "ML CLASSIFICATION TEMPLATES",
+    desc: "Boilerplate implementations of binary classification, multiclass classification, and regression tasks across Keras, PyTorch, LightGBM, and XGBoost — with feature importance visualization.",
+    tags: ["PYTHON", "PYTORCH", "KERAS", "XGBOOST", "LIGHTGBM"],
+    image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=600&h=360&fit=crop&auto=format",
+    alt: "Machine learning model visualization",
+    color: "#ffff00",
+    demo: null,
+    code: "https://github.com/ishanvi-mohan/ml-classification-regression-templates" as string | null,
+  },
 ];
 
 const ROLES = ["AI ENGINEER", "SOFTWARE DEVELOPER", "DATA ANALYST", "FULL STACK DEV"];
